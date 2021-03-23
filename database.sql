@@ -7,6 +7,7 @@ create table category (
     name varchar(50) not null
 );
 
-insert into category(name) value ('Kissat');
 insert into category(name) value ('Koirat');
-
+insert into category(name) value ('Kissat');
+insert into category(name) value ('Pieneläimet');
+insert into category(name) value ('Tarjoukset');
