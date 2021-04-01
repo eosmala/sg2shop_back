@@ -9,7 +9,7 @@ $uri = parse_url(filter_input(INPUT_SERVER, 'PATH_INFO'), PHP_URL_PATH);
 $parameters = explode('/', $uri);
 
 // category id is first parameter so it follows after address  separated with slash
-$category_id = $uri[1];
+$category_id = $parameters[1];
 
 try {
     $db = openDb();
