@@ -28,3 +28,16 @@ insert into product (name, price, category_id) values ('raapimapuu', 15, 2);
 insert into product (name, price, category_id) values ('hihna', 10, 1);
 // 6.4.2021 yksi uusi tuote
 insert into product (name, price, category_id) values ('terraario', 20, 3);
+
+
+--rekisteröityminen
+use webshop;
+
+drop table if exists registration;
+create table registration (
+  	id INT primary key AUTO_INCREMENT,
+    username varchar(100) NOT NULL,
+    email varchar(100) NOT NULL UNIQUE,
+    password varchar(100) NOT NULL,
+    added TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
