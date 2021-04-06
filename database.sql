@@ -26,5 +26,20 @@ create table product (
 
 insert into product (name, price, category_id) values ('raapimapuu', 15, 2);
 insert into product (name, price, category_id) values ('hihna', 10, 1);
-// 6.4.2021 yksi uusi tuote
+-- 6.4.2021 pieneläimet yksi tuote ja muutama tarjoustuote
 insert into product (name, price, category_id) values ('terraario', 20, 3);
+insert into product (name, price, category_id) values ('kissanhiekka', 3, 4);
+insert into product (name, price, category_id) values ('mega-puruluu', 2, 4);
+insert into product (name, price, category_id) values ('kalanruoka', 1, 4);
+
+--rekisteröityminen
+use webshop;
+
+drop table if exists registration;
+create table registration (
+  	id INT primary key AUTO_INCREMENT,
+    username varchar(100) NOT NULL,
+    email varchar(100) NOT NULL UNIQUE,
+    password varchar(100) NOT NULL,
+    added TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
