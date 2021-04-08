@@ -12,7 +12,7 @@ insert into category(name) value ('Kissat');
 insert into category(name) value ('Pieneläimet');
 insert into category(name) value ('Tarjoukset');
 
-// 30.3.2021
+-- 30.3.2021
 create table product (
     id int primary key auto_increment,
     name varchar(100) not null,
@@ -43,3 +43,31 @@ create table registration (
     password varchar(100) NOT NULL,
     added TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+--8.4.
+ALTER TABLE product
+ADD COLUMN description varchar(255),
+ADD COLUMN subcategory_id INT;
+
+CREATE TABLE customer (
+    userid INT primary key,
+    firstName varchar(50) NOT NULL,
+    lastName varchar(50) NOT NULL,
+    streetAddress varchar(50),
+    zipcode varchar(10),
+    city varchar(50),
+    country varchar(20),
+    phonenumber varchar(20),
+    FOREIGN KEY (userid)
+	    REFERENCES registration(id)
+);
+
+create table subcategory (
+    sub_id int primary key auto_increment,
+    name varchar(50) not null
+);
+
+ALTER TABLE product
+ADD CONSTRAINT sub_id
+FOREIGN KEY (subcategory_id)
+    REFERENCES subcategory(sub_id);
