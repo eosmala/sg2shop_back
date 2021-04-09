@@ -24,14 +24,6 @@ create table product (
     on delete restrict
 );
 
-insert into product (name, price, category_id) values ('raapimapuu', 15, 2);
-insert into product (name, price, category_id) values ('hihna', 10, 1);
--- 6.4.2021 pieneläimet yksi tuote ja muutama tarjoustuote
-insert into product (name, price, category_id) values ('terraario', 20, 3);
-insert into product (name, price, category_id) values ('kissanhiekka', 3, 4);
-insert into product (name, price, category_id) values ('mega-puruluu', 2, 4);
-insert into product (name, price, category_id) values ('kalanruoka', 1, 4);
-
 --rekisteröityminen
 use webshop;
 
@@ -71,3 +63,25 @@ ALTER TABLE product
 ADD CONSTRAINT sub_id
 FOREIGN KEY (subcategory_id)
     REFERENCES subcategory(sub_id);
+
+-- Lisää tuotteita, kuvat, descriptionit jne. 09.04.2021 --
+
+-- koirat
+insert into product (name, price, image, category_id, description) values ('Hihna', 16.99, "hihna.png", 1, 'Remmi koirasi ulkoilutukseen.');
+insert into product (name, price, image, category_id, description) values ('Ruokanappulat', 19.90, "ruokanappulat.png", 1, 'Herkullisia rehunappeja koirallesi.');
+insert into product (name, price, image, category_id, description) values ('Tennispallo', 2.00, "tennispallo.png", 1, 'Loputonta leikin iloa koirallesi.');
+
+-- kissat
+insert into product (name, price, image, category_id, description) values ('Raapimapuu', 79.90, "raapimapuu.png", 2, 'Kissan unelma raapimishommiin.');
+insert into product (name, price, image, category_id, description) values ('Laserosoitin', 5.90, "laserosoitin.png", 2, 'Laita kissasi jahtaamaan punaista valoa.');
+insert into product (name, price, image, category_id, description) values ('Peti', 12.90, "peti.png", 2, 'Muhkea peti kissan loikoiluun.');
+
+-- pieneläimet
+insert into product (name, price, image, category_id, description) values ('Terraario', 120.00, "terraario.png", 3, 'Terraario käärmeelle tai mille keksitkään.');
+insert into product (name, price, image, category_id, description) values ('Siemenet', 4.90, "siemenet.png", 3, 'Herkullisia siemeniä lintuystävillesi.');
+insert into product (name, price, image, category_id, description) values ('Tekokasvi', 5.00, "tekokasvi.png", 3, 'Upea tekokasvi akvaarioon.');
+
+-- tarjoukset
+insert into product (name, price, image, category_id, description) values ('Kissanhiekka', 5.90, "kissanhiekka.png", 4, 'Mieluisat hiekat kissojen tarpeiden tekoon.');
+insert into product (name, price, image, category_id, description) values ('Mega-puruluu', 2.50, "puruluu.png", 4, 'Pureskeltavaa jopa isommalle koiralle.');
+insert into product (name, price, image, category_id, description) values ('Kalanruoka', 3.90, "kalanruoka.png", 4, 'Maukasta apetta kalakavereille.');
