@@ -24,35 +24,12 @@ create table product (
     on delete restrict
 );
 
---rekisteröityminen
-use webshop;
-
-drop table if exists registration;
-create table registration (
-  	id INT primary key AUTO_INCREMENT,
-    username varchar(100) NOT NULL,
-    email varchar(100) NOT NULL UNIQUE,
-    password varchar(100) NOT NULL,
-    added TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
 --8.4.
 ALTER TABLE product
 ADD COLUMN description varchar(255),
 ADD COLUMN subcategory_id INT;
 
-CREATE TABLE customer (
-    userid INT primary key,
-    firstName varchar(50) NOT NULL,
-    lastName varchar(50) NOT NULL,
-    streetAddress varchar(50),
-    zipcode varchar(10),
-    city varchar(50),
-    country varchar(20),
-    phonenumber varchar(20),
-    FOREIGN KEY (userid)
-	    REFERENCES registration(id)
-);
+
 
 create table subcategory (
     sub_id int primary key auto_increment,
@@ -85,3 +62,23 @@ insert into product (name, price, image, category_id, description) values ('Teko
 insert into product (name, price, image, category_id, description) values ('Kissanhiekka', 5.90, "kissanhiekka.png", 4, 'Mieluisat hiekat kissojen tarpeiden tekoon.');
 insert into product (name, price, image, category_id, description) values ('Mega-puruluu', 2.50, "puruluu.png", 4, 'Pureskeltavaa jopa isommalle koiralle.');
 insert into product (name, price, image, category_id, description) values ('Kalanruoka', 3.90, "kalanruoka.png", 4, 'Maukasta apetta kalakavereille.');
+
+--Customer ja registration tablet yhdistetty
+
+use webshop;
+
+drop table if exists users;
+create table users (
+  	id INT primary key AUTO_INCREMENT,
+    username varchar(100) NOT NULL,
+    email varchar(100) NOT NULL UNIQUE,
+    password varchar(100) NOT NULL,
+    added TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    firstName varchar(50),
+    lastName varchar(50),
+    streetAddress varchar(50),
+    zipcode varchar(10),
+    city varchar(50),
+    country varchar(20),
+    phonenumber varchar(20)
+);
