@@ -67,8 +67,8 @@ insert into product (name, price, image, category_id, description) values ('Kala
 
 use webshop;
 
-drop table if exists users;
-create table users (
+drop table if exists customer;
+create table customer (
   	id INT primary key AUTO_INCREMENT,
     username varchar(100) NOT NULL,
     email varchar(100) NOT NULL UNIQUE,
