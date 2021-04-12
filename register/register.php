@@ -52,7 +52,7 @@ if(isset($_POST['register'])){
     }
 
     //tarkista onko email jo käytössä
-    $sql = "SELECT COUNT(email) AS num FROM users WHERE email = :email";
+    $sql = "SELECT COUNT(email) AS num FROM customer WHERE email = :email";
     $stmt = $db->prepare($sql);
     $stmt->bindValue(':email', $email);
     $stmt->execute();
@@ -66,7 +66,7 @@ if(isset($_POST['register'])){
     $passwordhash = password_hash($pass, PASSWORD_BCRYPT, array("cost" => 12));
 
     //tallenna tiedot db
-    $sql = "INSERT INTO users (username, email, password) VALUES (:username, :email, :password)";
+    $sql = "INSERT INTO customer (username, email, password) VALUES (:username, :email, :password)";
     $stmt = $db->prepare($sql);
     $stmt->bindValue(':username', $username);
     $stmt->bindValue(':email', $email);

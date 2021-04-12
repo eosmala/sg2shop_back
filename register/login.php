@@ -35,7 +35,7 @@ if(isset($_POST['login'])){
     $passwordAttempt = !empty($_POST['password']) ? trim($_POST['password']) : null;
 
     //hae account info sähköpostille
-    $sql = "SELECT id, email, password FROM users WHERE email = :email";
+    $sql = "SELECT id, email, password FROM customer WHERE email = :email";
     $stmt = $db->prepare($sql);
     $stmt->bindValue(':email', $email);
     $stmt->execute();
