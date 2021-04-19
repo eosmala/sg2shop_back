@@ -63,3 +63,21 @@ create table customer (
     phonenumber varchar(20)
 );
 
+create table product_order (
+    ordernumber SMALLINT primary key AUTO_INCREMENT,
+    customer_id INT NOT NULL,
+    orderdate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    shipping_date DATETIME,
+    orderstatus varchar(10),
+    foreign key (customer_id) references customer(id)
+);
+
+create table order_items (
+    ordernumber SMALLINT NOT NULL,
+    line_number SMALLINT NOT NULL,
+    product_id INT NOT NULL,
+    amount INT,
+    PRIMARY KEY (ordernumber, line_number),
+    foreign key (product_id) references product(id),
+    foreign key (ordernumber) references product_order(ordernumber)
+);
