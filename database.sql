@@ -83,3 +83,7 @@ create table customer (
     country varchar(20),
     phonenumber varchar(20)
 );
+
+-- 19.4.21
+ALTER TABLE product
+ADD COLUMN stock_amount INT;
