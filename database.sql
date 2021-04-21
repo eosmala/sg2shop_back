@@ -21,7 +21,7 @@ create table product (
     category_id int not null,
     description varchar(255),
     index category_id(category_id),
-    foreign key (category_id) references category(id)
+    foreign key (category_id) references category(category_id)
     on delete restrict
 );
 
@@ -69,7 +69,7 @@ create table product_order (
     orderdate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     shipping_date DATETIME,
     orderstatus varchar(10),
-    foreign key (customer_id) references customer(id)
+    foreign key (customer_id) references customer(customer_id)
 );
 
 create table order_items (
@@ -78,6 +78,6 @@ create table order_items (
     product_id INT NOT NULL,
     quantity INT,
     PRIMARY KEY (ordernumber, line_number),
-    foreign key (product_id) references product(id),
+    foreign key (product_id) references product(product_id),
     foreign key (ordernumber) references product_order(ordernumber)
 );
