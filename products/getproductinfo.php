@@ -13,7 +13,7 @@ $productId = $parameters[1];
 
 try {
     $db = openDb();
-    selectAsJson($db, "select * from product where id = $productId");
+    selectAsJson($db, "select * from product where product_id = $productId");
 }
 catch (PDOException $pdoex) {
     returnError($pdoex);
