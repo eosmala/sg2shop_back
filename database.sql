@@ -3,7 +3,7 @@ create database webshop;
 use webshop;
 
 create table category (
-    id int primary key auto_increment,
+    category_id int primary key auto_increment,
     category_name varchar(50) not null
 );
 
@@ -13,7 +13,7 @@ insert into category(category_name) value ('Pieneläimet');
 insert into category(category_name) value ('Tarjoukset');
 
 create table product (
-    id int primary key auto_increment,
+    product_id int primary key auto_increment,
     product_name varchar(100) not null,
     price double (10,2) not null,
     stock_amount int,
@@ -49,7 +49,7 @@ insert into product (product_name, price, image, category_id, description, stock
 
 
 create table customer (
-  	id INT primary key AUTO_INCREMENT,
+  	customer_id INT primary key AUTO_INCREMENT,
     username varchar(100) NOT NULL,
     email varchar(100) NOT NULL UNIQUE,
     password varchar(100) NOT NULL,
