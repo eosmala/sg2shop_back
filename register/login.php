@@ -1,57 +1,36 @@
-<h2>Login</h2>
-<form action="<?php echo $_SERVER["PHP_SELF"];?>" method="POST">
-<div>
-    <label>Email</label>
-    <input name="email" type="email" required/>
-</div>
-<div>
-    <label>Password</label>
-    <input name="password" type="password" required/>
-</div>
-<div>
-    <input type="submit" name="login" value="Login"/>
-</div>
-</form>
 <?php
-
 session_start();
+require_once '../inc/headers.php';
+require_once '../inc/functions.php';
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "webshop";
+$email = filter_input(INPUT_POST,'email',FILTER_SANITIZE_STRING);
+$password = filter_input(INPUT_POST,'password',FILTER_SANITIZE_STRING);
 
-try{
-    $db = new PDO("mysql:host=$servername;dbname=$dbname","$username",$password);
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch(PDOException $e){
-    "ERROR: Could not connect. " . $e->getMessage();
-}
+$sql = "SELECT customer_id, email, password FROM customer WHERE email='$email'";
 
-if(isset($_POST['login'])){
-
-    //hae valuet login formista
-    $email = !empty($_POST['email']) ? trim($_POST['email']) : null;
-    $passwordAttempt = !empty($_POST['password']) ? trim($_POST['password']) : null;
-
-    //hae account info sähköpostille
-    $sql = "SELECT id, email, password FROM customer WHERE email = :email";
-    $stmt = $db->prepare($sql);
-    $stmt->bindValue(':email', $email);
-    $stmt->execute();
-
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
-    if($user === false) {
-        die('Incorrect email and/or password, please try again');
+try {
+  $db = openDb();
+  $query = $db->query($sql);
+  $user = $query->fetch(PDO::FETCH_OBJ);
+  if ($user) {
+    $passwordFromDb = $user->password;
+    if (password_verify($password,$passwordFromDb)) {
+      $data = array(
+        'customer_id' => $user->customer_id
+      );
+      $_SESSION['user'] = $user;
     } else {
-        $validPassword = password_verify($passwordAttempt, $user['password']);
-        if($validPassword) {
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['logged_in'] = time();
-            header('Location: profile.php');
-            exit;
-        } else {
-            die('Incorrect email and/or password, please try again');
-        }
+      header('HTTP/1.1 401 Unauthorized');
+      $data = array('message' => "Unsuccessfull login.");
     }
+  } else {
+    header('HTTP/1.1 401 Unauthorized');
+    $data = array('message' => "Unsuccessfull login.");
+  }
+  echo json_encode($data);
+
+
+  
+} catch (PDOException $pdoex) {
+  returnError($pdoex); 
 }
