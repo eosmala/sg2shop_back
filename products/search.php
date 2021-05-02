@@ -7,7 +7,7 @@ $criteria = $_GET['product'];
 
 try {
     $db = openDb();
-    $sql = "select * from product where name like '%$criteria%'";
+    $sql = "select * from product where product_name like '%$criteria%'";
     $query = $db->query($sql);
     $results = $query->fetchAll(PDO::FETCH_ASSOC);
     echo header('HTTP/1.1 200 OK');
