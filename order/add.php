@@ -7,7 +7,7 @@ $db = null;
 $input = json_decode(file_get_contents('php://input'));
 $fname = filter_var($input->firstName,FILTER_SANITIZE_STRING);
 $lname = filter_var($input->lastName,FILTER_SANITIZE_STRING);
-$address = filter_var($input->address,FILTER_SANITIZE_STRING);
+$address = filter_var($input->streetAddress,FILTER_SANITIZE_STRING);
 $zipcode = filter_var($input->zipcode,FILTER_SANITIZE_STRING);
 $city = filter_var($input->city,FILTER_SANITIZE_STRING);
 $pnumber = filter_var($input->phonenumber,FILTER_SANITIZE_STRING);
@@ -19,18 +19,18 @@ try {
 
     $db->beginTransaction();
 
-    $sql = "insert into customer (firstName, lastName, streetAddress, zipcode, city, phonenumber, email) values
-    ('".
-    filter_var($fname,FILTER_SANITIZE_STRING) . "','" . 
-    filter_var($lname,FILTER_SANITIZE_STRING) . "','" . 
-    filter_var($address,FILTER_SANITIZE_STRING) . "','" .
-    filter_var($zipcode,FILTER_SANITIZE_STRING) . "','" . 
-    filter_var($city,FILTER_SANITIZE_STRING) . "','" . 
-    filter_var($pnumber,FILTER_SANITIZE_STRING) . "','" . 
-    filter_var($email,FILTER_SANITIZE_STRING)
-    . "')";
 
-    $customer_id = executeInsert($db,$sql);
+    $query = $db->prepare('insert into customer (firstName, lastName, streetAddress, zipcode, city, phonenumber, email) values(:firstName, :lastName, :streetAddress, :zipcode, :city, :phonenumber, :email)');
+    $query->bindValue(':firstName', $fname,PDO::PARAM_STR);
+    $query->bindValue(':lastName', $lname,PDO::PARAM_STR);
+    $query->bindValue(':streetAddress', $address,PDO::PARAM_STR);
+    $query->bindValue(':zipcode', $zipcode,PDO::PARAM_STR);
+    $query->bindValue(':city', $city,PDO::PARAM_STR);
+    $query->bindValue(':phonenumber', $pnumber,PDO::PARAM_STR);
+    $query->bindValue(':email', $email,PDO::PARAM_STR);
+    $query->execute();
+
+    $customer_id = $db->lastInsertId();
 
     $sql = "insert into `product_order` (customer_id) values ($customer_id)";
     $ordernumber = executeInsert($db,$sql);
@@ -39,7 +39,7 @@ try {
         $sql = "insert into order_items (ordernumber, product_id) values ("
         .
           $ordernumber . "," . 
-          $product->id
+          $product->product_id
         . ")";
         executeInsert($db,$sql);
     }
