@@ -65,10 +65,9 @@ create table product_order (
 
 create table order_items (
     ordernumber SMALLINT NOT NULL,
-    line_number SMALLINT NOT NULL,
     product_id INT NOT NULL,
     quantity INT,
-    PRIMARY KEY (ordernumber, line_number),
+    PRIMARY KEY (ordernumber, product_id),
     foreign key (product_id) references product(product_id),
     foreign key (ordernumber) references product_order(ordernumber)
 );
